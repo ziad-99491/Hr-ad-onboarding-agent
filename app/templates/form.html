@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8"><title>New Hire Request</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:system-ui,sans-serif;max-width:560px;margin:2rem auto;padding:0 1rem;color:#222}
+label{display:block;margin:.8rem 0 .2rem;font-weight:600;font-size:.9rem}
+input,textarea{width:100%;padding:.55rem;border:1px solid #bbb;border-radius:6px;box-sizing:border-box;font:inherit}
+button{margin-top:1.2rem;padding:.65rem 1.2rem;border:0;border-radius:6px;background:#1f5fbf;color:#fff;font:inherit;cursor:pointer}
+#out{margin-top:1rem;padding:.8rem;border-radius:6px;background:#f2f4f7;white-space:pre-wrap}
+</style></head><body>
+<h2>New Hire Request</h2>
+<form id="f">
+<label>First name</label><input name="first_name" required>
+<label>Last name</label><input name="last_name" required>
+<label>Job title</label><input name="job_title" required>
+<label>Department</label><input name="department" required>
+<label>Manager email</label><input name="manager_email" type="email" required>
+<label>Start date</label><input name="start_date" type="date" required>
+<label>Notes (optional – e.g. needs VPN)</label><textarea name="notes" rows="3"></textarea>
+<button>Submit</button></form>
+<div id="out" hidden></div>
+<script>
+const out=document.getElementById('out');
+document.getElementById('f').onsubmit=async e=>{
+  e.preventDefault(); out.hidden=false; out.textContent='Submitting…';
+  const r=await fetch('/api/requests',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(Object.fromEntries(new FormData(e.target)))});
+  const j=await r.json();
+  if(!r.ok){out.textContent='Error: '+JSON.stringify(j.detail||j);return}
+  for(let i=0;i<30;i++){
+    await new Promise(s=>setTimeout(s,1500));
+    const s=await (await fetch('/api/requests/'+j.id)).json();
+    out.textContent='Request '+j.id+'\nStatus: '+s.status+(s.sam?'\nUsername: '+s.sam:'')
+      +(s.plan&&s.plan.flags.length?'\nFlags: '+s.plan.flags.join('; '):'')+(s.error?'\nError: '+s.error:'');
+    if(['created','active','needs_review','failed'].includes(s.status))break;
+  }};
+</script></body></html>

@@ -1,0 +1,17 @@
+services:
+  hr-ad-agent:
+    build: .
+    container_name: hr-ad-agent
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "8000:8000"
+    extra_hosts:
+      - "AD-01.ITLAB.COM:10.20.10.10"
+    volumes:
+      - agent-data:/data
+      - ./certs:/certs:ro
+      - ./catalog.json:/app/catalog.json:ro
+
+volumes:
+  agent-data:

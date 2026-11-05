@@ -1,0 +1,36 @@
+{
+  "default_ou": "OU=Users,OU=Company,DC=ITLAB,DC=COM",
+  "departments": {
+    "IT": {
+      "ou": "OU=IT,OU=Departments,OU=Company,DC=ITLAB,DC=COM",
+      "default_groups": [
+        "CN=GG_IT_Users,OU=Groups,OU=Company,DC=ITLAB,DC=COM"
+      ]
+    },
+    "HR": {
+      "ou": "OU=HR,OU=Departments,OU=Company,DC=ITLAB,DC=COM",
+      "default_groups": [
+        "CN=GG_HR_Users,OU=Groups,OU=Company,DC=ITLAB,DC=COM"
+      ]
+    },
+    "Finance": {
+      "ou": "OU=Finance,OU=Departments,OU=Company,DC=ITLAB,DC=COM",
+      "default_groups": [
+        "CN=GG_Finance_Users,OU=Groups,OU=Company,DC=ITLAB,DC=COM"
+      ]
+    },
+    "Sales": {
+      "ou": "OU=Sales,OU=Departments,OU=Company,DC=ITLAB,DC=COM",
+      "default_groups": [
+        "CN=GG_Sales_Users,OU=Groups,OU=Company,DC=ITLAB,DC=COM"
+      ]
+    },
+    "Operations": {
+      "ou": "OU=Operations,OU=Departments,OU=Company,DC=ITLAB,DC=COM",
+      "default_groups": [
+        "CN=GG_Operations_Users,OU=Groups,OU=Company,DC=ITLAB,DC=COM"
+      ]
+    }
+  },
+  "optional_groups": {}
+}
